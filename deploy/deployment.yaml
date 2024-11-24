@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-python-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: simple-python-app
+  template:
+    metadata:
+      labels:
+        app: simple-python-app
+    spec:
+      containers:
+      - name: simple-python-app
+        image: your-registry/simple-python-app:latest
+        ports:
+        - containerPort: 8077
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: simple-python-app-service
+  labels:
+    app: simple-python-app
+spec:
+  selector:
+    app: simple-python-app
+  ports:
+    - protocol: TCP
+      port: 80          # Service port
+      targetPort: 8077  # Container port
+  type: ClusterIP       # Options: ClusterIP, NodePort, LoadBalancer
