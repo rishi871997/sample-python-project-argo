@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: simple-python-app
-        image: rs871997/sample-python-project:1.0
+        image: rs871997/sample-python-project:1.2
         ports:
         - containerPort: 8077
         resources:
